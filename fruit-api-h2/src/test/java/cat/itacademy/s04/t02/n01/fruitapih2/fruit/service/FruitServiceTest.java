@@ -74,4 +74,28 @@ class FruitServiceTest {
         assertThrows(FruitNotFoundException.class, () -> fruitService.findById(888L));
     }
 
+    @Test
+    void shouldUpdateFruit() {
+        Fruit existingFruit = new Fruit(1L, "Uva", 1.4);
+        Fruit updatedFruit = new Fruit(1L, "Melon", 3.2);
+
+        when(fruitRepository.findById(1L)).thenReturn(Optional.of(existingFruit));
+
+        when(fruitRepository.save(any(Fruit.class))).thenReturn(updatedFruit);
+
+        Fruit result = fruitService.update(1L, new Fruit(null, "Melon", 3.2));
+
+        assertEquals(1L, result.getId());
+        assertEquals("Melon", result.getName());
+        assertEquals(3.2, result.getWeightInKilos());
+    }
+
+    @Test
+    void shouldThrowExceptionWhenUpdatingNonExistingFruit() {
+        when(fruitRepository.findById(999L)).thenReturn(Optional.empty());
+
+        assertThrows(FruitNotFoundException.class, () -> fruitService.update(999L, new Fruit(null, "Pera",
+                2.1)));
+    }
+
 }

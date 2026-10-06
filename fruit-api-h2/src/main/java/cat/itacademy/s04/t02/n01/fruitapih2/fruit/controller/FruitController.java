@@ -42,4 +42,14 @@ public class FruitController {
         Fruit fruit = fruitService.findById(id);
         return FruitResponse.from(fruit);
     }
+
+    @PutMapping("/{id}")
+    public FruitResponse update(@PathVariable Long id, @Valid @RequestBody FruitRequest request) {
+
+        Fruit fruit = new Fruit(null, request.name(), request.weightInKilos());
+
+        Fruit updatedFruit = fruitService.update(id, fruit);
+
+        return FruitResponse.from(updatedFruit);
+    }
 }

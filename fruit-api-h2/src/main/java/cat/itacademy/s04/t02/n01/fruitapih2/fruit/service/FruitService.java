@@ -26,4 +26,11 @@ public class FruitService {
     public Fruit findById(Long id) {
         return fruitRepository.findById(id).orElseThrow(() -> new FruitNotFoundException(id));
     }
+
+    public Fruit update(Long id, Fruit fruit) {
+        Fruit existingFruit = findById(id);
+
+        Fruit updatedFruit = new Fruit(existingFruit.getId(), fruit.getName(), fruit.getWeightInKilos());
+        return fruitRepository.save(updatedFruit);
+    }
 }

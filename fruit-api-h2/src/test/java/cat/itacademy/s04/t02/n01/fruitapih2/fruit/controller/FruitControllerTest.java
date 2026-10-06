@@ -19,6 +19,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 
 @WebMvcTest(FruitController.class)
 class FruitControllerTest {
@@ -99,6 +100,46 @@ class FruitControllerTest {
         when(fruitService.findById(888L)).thenThrow(new FruitNotFoundException(888L));
 
         mockMvc.perform(get("/fruits/888")).andExpect(status().isNotFound());
+    }
+
+    @Test
+    void shouldUpdateFruit() throws Exception {
+        Fruit updatedFruit = new Fruit(1L, "Pera", 2.2);
+
+        when(fruitService.update(any(Long.class), any(Fruit.class)))
+                .thenReturn(updatedFruit);
+
+        mockMvc.perform(put("/fruits/1").contentType(MediaType.APPLICATION_JSON).content("""
+                            {
+                              "name": "Pera",
+                              "weightInKilos": 2.2
+                            }
+                            """)).andExpect(status().isOk()).andExpect(jsonPath("$.id").value(1))
+                .andExpect(jsonPath("$.name").value("Pera"))
+                .andExpect(jsonPath("$.weightInKilos").value(2.2));
+    }
+
+    @Test
+    void shouldReturnBadRequestWhenUpdatingWithInvalidData() throws Exception {
+        mockMvc.perform(put("/fruits/1").contentType(MediaType.APPLICATION_JSON).content("""
+                            {
+                              "name": "",
+                              "weightInKilos": -2.0
+                            }
+                            """)).andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void shouldReturnNotFoundWhenUpdatingNonExistingFruit() throws Exception {
+        when(fruitService.update(any(Long.class), any(Fruit.class)))
+                .thenThrow(new FruitNotFoundException(999L));
+
+        mockMvc.perform(put("/fruits/999").contentType(MediaType.APPLICATION_JSON).content("""
+                            {
+                              "name": "Pera",
+                              "weightInKilos": 2.0
+                            }
+                            """)).andExpect(status().isNotFound());
     }
 
 }
