@@ -47,6 +47,26 @@ class FruitControllerTest {
     }
 
     @Test
+    void shouldReturnBadRequestWhenNameIsBlank() throws Exception {
+        mockMvc.perform(post("/fruits").contentType(MediaType.APPLICATION_JSON).content("""
+                            {
+                              "name": "",
+                              "weightInKilos": 1.2
+                            }
+                            """)).andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void shouldReturnBadRequestWhenWeightIsNegative() throws Exception {
+        mockMvc.perform(post("/fruits").contentType(MediaType.APPLICATION_JSON).content("""
+                            {
+                              "name": "Sandia",
+                              "weightInKilos": -4.5
+                            }
+                            """)).andExpect(status().isBadRequest());
+    }
+
+    @Test
     void shouldReturnAllFruits() throws Exception {
         Fruit uva = new Fruit(1L, "Uva", 1.4);
         Fruit melon = new Fruit(2L, "Melon", 3.7);
