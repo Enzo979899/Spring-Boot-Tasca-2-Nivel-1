@@ -1,4 +1,4 @@
-package cat.itacademy.s04.t02.n01.fruitapih2.model;
+package cat.itacademy.s04.t02.n01.fruitapih2.fruit.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

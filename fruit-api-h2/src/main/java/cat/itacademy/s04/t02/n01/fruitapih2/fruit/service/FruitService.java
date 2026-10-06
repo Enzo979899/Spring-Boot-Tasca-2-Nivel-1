@@ -1,7 +1,7 @@
-package cat.itacademy.s04.t02.n01.fruitapih2.service;
+package cat.itacademy.s04.t02.n01.fruitapih2.fruit.service;
 
-import cat.itacademy.s04.t02.n01.fruitapih2.model.Fruit;
-import cat.itacademy.s04.t02.n01.fruitapih2.repository.FruitRepository;
+import cat.itacademy.s04.t02.n01.fruitapih2.fruit.model.Fruit;
+import cat.itacademy.s04.t02.n01.fruitapih2.fruit.repository.FruitRepository;
 import org.springframework.stereotype.Service;
 
 @Service
