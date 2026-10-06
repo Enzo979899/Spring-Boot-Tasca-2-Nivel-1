@@ -1,5 +1,6 @@
 package cat.itacademy.s04.t02.n01.fruitapih2.fruit.service;
 
+import cat.itacademy.s04.t02.n01.fruitapih2.fruit.exception.FruitNotFoundException;
 import cat.itacademy.s04.t02.n01.fruitapih2.fruit.model.Fruit;
 import cat.itacademy.s04.t02.n01.fruitapih2.fruit.repository.FruitRepository;
 import org.junit.jupiter.api.Test;
@@ -9,8 +10,10 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -51,6 +54,24 @@ class FruitServiceTest {
         assertEquals("Melon", result.get(1).getName());
     }
 
+    @Test
+    void shouldReturnFruitById() {
+        Fruit uva = new Fruit(1L, "Uva", 2.6);
 
+        when(fruitRepository.findById(1L)).thenReturn(Optional.of(uva));
+
+        Fruit result = fruitService.findById(1L);
+
+        assertEquals(1L, result.getId());
+        assertEquals("Uva", result.getName());
+        assertEquals(2.6, result.getWeightInKilos());
+    }
+
+    @Test
+    void shouldThrowExceptionWhenFruitDoesNotExist() {
+        when(fruitRepository.findById(888L)).thenReturn(Optional.empty());
+
+        assertThrows(FruitNotFoundException.class, () -> fruitService.findById(888L));
+    }
 
 }

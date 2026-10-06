@@ -1,5 +1,6 @@
 package cat.itacademy.s04.t02.n01.fruitapih2.fruit.service;
 
+import cat.itacademy.s04.t02.n01.fruitapih2.fruit.exception.FruitNotFoundException;
 import cat.itacademy.s04.t02.n01.fruitapih2.fruit.model.Fruit;
 import cat.itacademy.s04.t02.n01.fruitapih2.fruit.repository.FruitRepository;
 import org.springframework.stereotype.Service;
@@ -20,5 +21,9 @@ public class FruitService {
 
     public List<Fruit> findAll() {
         return fruitRepository.findAll();
+    }
+
+    public Fruit findById(Long id) {
+        return fruitRepository.findById(id).orElseThrow(() -> new FruitNotFoundException(id));
     }
 }

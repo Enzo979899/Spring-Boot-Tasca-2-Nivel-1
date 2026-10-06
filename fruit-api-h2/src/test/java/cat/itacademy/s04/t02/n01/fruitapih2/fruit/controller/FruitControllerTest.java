@@ -1,6 +1,7 @@
 package cat.itacademy.s04.t02.n01.fruitapih2.fruit.controller;
 
 
+import cat.itacademy.s04.t02.n01.fruitapih2.fruit.exception.FruitNotFoundException;
 import cat.itacademy.s04.t02.n01.fruitapih2.fruit.model.Fruit;
 import cat.itacademy.s04.t02.n01.fruitapih2.fruit.service.FruitService;
 import org.junit.jupiter.api.Test;
@@ -60,6 +61,24 @@ class FruitControllerTest {
                 .andExpect(jsonPath("$[1].id").value(2))
                 .andExpect(jsonPath("$[1].name").value("Melon"))
                 .andExpect(jsonPath("$[1].weightInKilos").value(3.7));
+    }
+
+    @Test
+    void shouldReturnFruitById() throws Exception {
+        Fruit mandarinas = new Fruit(1L, "Mandarinas", 1.5);
+
+        when(fruitService.findById(1L)).thenReturn(mandarinas);
+
+        mockMvc.perform(get("/fruits/1")).andExpect(status().isOk()).andExpect(jsonPath("$.id")
+                        .value(1)).andExpect(jsonPath("$.name").value("Mandarinas"))
+                .andExpect(jsonPath("$.weightInKilos").value(1.5));
+    }
+
+    @Test
+    void shouldReturnNotFoundWhenFruitDoesNotExist() throws Exception {
+        when(fruitService.findById(888L)).thenThrow(new FruitNotFoundException(888L));
+
+        mockMvc.perform(get("/fruits/888")).andExpect(status().isNotFound());
     }
 
 }
