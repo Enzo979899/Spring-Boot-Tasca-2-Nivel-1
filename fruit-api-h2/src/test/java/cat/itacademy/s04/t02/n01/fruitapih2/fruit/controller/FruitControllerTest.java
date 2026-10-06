@@ -101,7 +101,10 @@ class FruitControllerTest {
     void shouldReturnNotFoundWhenFruitDoesNotExist() throws Exception {
         when(fruitService.findById(888L)).thenThrow(new FruitNotFoundException(888L));
 
-        mockMvc.perform(get("/fruits/888")).andExpect(status().isNotFound());
+        mockMvc.perform(get("/fruits/888")).andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.status").value(404))
+                .andExpect(jsonPath("$.error").value("Not Found"))
+                .andExpect(jsonPath("$.message").value("Fruit with id 888 not found"));
     }
 
     @Test
