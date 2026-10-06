@@ -52,4 +52,10 @@ public class FruitController {
 
         return FruitResponse.from(updatedFruit);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        fruitService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }

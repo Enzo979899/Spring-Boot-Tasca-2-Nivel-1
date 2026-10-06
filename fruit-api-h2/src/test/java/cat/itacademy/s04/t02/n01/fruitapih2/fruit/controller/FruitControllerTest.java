@@ -10,6 +10,8 @@ import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.mockito.Mockito.doThrow;
 
 import java.util.List;
 
@@ -140,6 +142,18 @@ class FruitControllerTest {
                               "weightInKilos": 2.0
                             }
                             """)).andExpect(status().isNotFound());
+    }
+
+    @Test
+    void shouldDeleteFruit() throws Exception {
+        mockMvc.perform(delete("/fruits/1")).andExpect(status().isNoContent());
+    }
+
+    @Test
+    void shouldReturnNotFoundWhenDeletingNonExistingFruit() throws Exception {
+        doThrow(new FruitNotFoundException(999L)).when(fruitService).delete(999L);
+
+        mockMvc.perform(delete("/fruits/999")).andExpect(status().isNotFound());
     }
 
 }

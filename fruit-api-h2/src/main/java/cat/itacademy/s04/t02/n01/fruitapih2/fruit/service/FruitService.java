@@ -33,4 +33,9 @@ public class FruitService {
         Fruit updatedFruit = new Fruit(existingFruit.getId(), fruit.getName(), fruit.getWeightInKilos());
         return fruitRepository.save(updatedFruit);
     }
+
+    public void delete(Long id) {
+        Fruit fruit = findById(id);
+        fruitRepository.delete(fruit);
+    }
 }

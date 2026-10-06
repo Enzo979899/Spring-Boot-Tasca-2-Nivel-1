@@ -8,6 +8,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import static org.mockito.Mockito.verify;
 
 import java.util.List;
 import java.util.Optional;
@@ -96,6 +97,24 @@ class FruitServiceTest {
 
         assertThrows(FruitNotFoundException.class, () -> fruitService.update(999L, new Fruit(null, "Pera",
                 2.1)));
+    }
+
+    @Test
+    void shouldDeleteFruit() {
+        Fruit fruit = new Fruit(1L, "Pera", 1.1);
+
+        when(fruitRepository.findById(1L)).thenReturn(Optional.of(fruit));
+
+        fruitService.delete(1L);
+
+        verify(fruitRepository).delete(fruit);
+    }
+
+    @Test
+    void shouldThrowExceptionWhenDeletingNonExistingFruit() {
+        when(fruitRepository.findById(999L)).thenReturn(Optional.empty());
+
+        assertThrows(FruitNotFoundException.class, () -> fruitService.delete(999L));
     }
 
 }
