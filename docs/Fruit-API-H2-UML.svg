@@ -1,0 +1,210 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1700" height="1040" viewBox="0 0 1700 1040">
+<!--
+Generated from the following Mermaid class diagram source:
+
+classDiagram
+    direction LR
+
+    class FruitController {
+        <<RestController>>
+        -FruitService fruitService
+        +create(FruitRequest) ResponseEntity~FruitResponse~
+        +findAll() List~FruitResponse~
+        +findById(Long) FruitResponse
+        +update(Long, FruitRequest) FruitResponse
+        +delete(Long) ResponseEntity~Void~
+    }
+
+    class FruitService {
+        <<Service>>
+        -FruitRepository fruitRepository
+        +create(Fruit) Fruit
+        +findAll() List~Fruit~
+        +findById(Long) Fruit
+        +update(Long, Fruit) Fruit
+        +delete(Long) void
+    }
+
+    class FruitRepository {
+        <<Repository / Interface>>
+        +save(Fruit) Fruit
+        +findAll() List~Fruit~
+        +findById(Long) Optional~Fruit~
+        +delete(Fruit) void
+    }
+
+    class Fruit {
+        <<Entity>>
+        -Long id
+        -String name
+        -double weightInKilos
+        +Fruit()
+        +Fruit(Long, String, double)
+        +getId() Long
+        +getName() String
+        +getWeightInKilos() double
+    }
+
+    class FruitRequest {
+        <<DTO / record>>
+        +String name
+        +double weightInKilos
+    }
+
+    class FruitResponse {
+        <<DTO / record>>
+        +Long id
+        +String name
+        +double weightInKilos
+        +from(Fruit) FruitResponse
+    }
+
+    class FruitNotFoundException {
+        <<RuntimeException>>
+        +FruitNotFoundException(Long)
+    }
+
+    class ApiError {
+        <<record>>
+        +int status
+        +String error
+        +String message
+    }
+
+    class GlobalExceptionHandler {
+        <<RestControllerAdvice>>
+        +handleFruitNotFound(FruitNotFoundException) ResponseEntity~ApiError~
+        +handleValidation(MethodArgumentNotValidException) ResponseEntity~ApiError~
+    }
+
+    FruitController --> FruitService : uses
+    FruitController ..> FruitRequest : receives
+    FruitController ..> FruitResponse : returns
+    FruitController ..> Fruit : maps
+
+    FruitService --> FruitRepository : uses
+    FruitService ..> FruitNotFoundException : throws
+
+    FruitRepository --> Fruit : persists
+    FruitResponse ..> Fruit : maps from
+
+    GlobalExceptionHandler ..> FruitNotFoundException : handles
+    GlobalExceptionHandler ..> ApiError : returns
+
+-->
+<defs>
+  <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5"
+          markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+    <path d="M 0 0 L 10 5 L 0 10 z" fill="#334155"/>
+  </marker>
+  <style>
+    .box { fill:#ffffff; stroke:#334155; stroke-width:2; rx:10; }
+    .head { fill:#f1f5f9; stroke:#334155; stroke-width:2; }
+    .title { font: 700 22px Arial, sans-serif; fill:#0f172a; }
+    .stereo { font: italic 16px Arial, sans-serif; fill:#475569; }
+    .member { font: 16px Consolas, "Courier New", monospace; fill:#1e293b; }
+    .line { stroke:#334155; stroke-width:2.2; fill:none; marker-end:url(#arrow); }
+    .dash { stroke:#64748b; stroke-width:2; fill:none; stroke-dasharray:8 7; marker-end:url(#arrow); }
+    .label { font: 15px Arial, sans-serif; fill:#475569; }
+    .diagram-title { font: 700 30px Arial, sans-serif; fill:#0f172a; }
+    .diagram-subtitle { font: 16px Arial, sans-serif; fill:#64748b; }
+  </style>
+</defs>
+
+<rect width="100%" height="100%" fill="#f8fafc"/>
+<text x="60" y="45" class="diagram-title">Fruit API H2 — UML</text>
+<text x="60" y="70" class="diagram-subtitle">Spring Boot · Feature architecture · JPA · DTOs · Global error handling</text>
+
+<path d="M490,220 L635,220" class="line"/>
+<text x="535" y="205" class="label">uses</text>
+<path d="M1025,220 L1195,220" class="line"/>
+<text x="1075" y="205" class="label">uses</text>
+<path d="M1400,360 L1400,500" class="line"/>
+<text x="1410" y="435" class="label">persists</text>
+<path d="M250,400 L250,515" class="dash"/>
+<text x="260" y="465" class="label">receives</text>
+<path d="M300,400 L300,775" class="dash"/>
+<text x="310" y="735" class="label">returns</text>
+<path d="M430,875 L1220,650" class="dash"/>
+<text x="745" y="765" class="label">maps from</text>
+<path d="M830,395 L790,535" class="dash"/>
+<text x="805" y="470" class="label">throws</text>
+<path d="M820,790 L800,700" class="dash"/>
+<text x="830" y="750" class="label">handles</text>
+<path d="M1080,895 L1210,915" class="dash"/>
+<text x="1115" y="885" class="label">returns</text>
+<path d="M490,330 C700,450 980,520 1220,610" class="dash"/>
+<text x="825" y="500" class="label">maps</text>
+<rect x="60" y="90" width="430" height="310" class="box"/>
+<path d="M60,162 H490" stroke="#334155" stroke-width="2"/>
+<text x="275.0" y="121" text-anchor="middle" class="title">FruitController</text>
+<text x="275.0" y="145" text-anchor="middle" class="stereo">&lt;&lt;RestController&gt;&gt;</text>
+<text x="78" y="192" class="member">- fruitService: FruitService</text>
+<text x="78" y="219" class="member">+ create(FruitRequest): ResponseEntity&lt;FruitResponse&gt;</text>
+<text x="78" y="246" class="member">+ findAll(): List&lt;FruitResponse&gt;</text>
+<text x="78" y="273" class="member">+ findById(Long): FruitResponse</text>
+<text x="78" y="300" class="member">+ update(Long, FruitRequest): FruitResponse</text>
+<text x="78" y="327" class="member">+ delete(Long): ResponseEntity&lt;Void&gt;</text>
+<rect x="635" y="110" width="390" height="285" class="box"/>
+<path d="M635,182 H1025" stroke="#334155" stroke-width="2"/>
+<text x="830.0" y="141" text-anchor="middle" class="title">FruitService</text>
+<text x="830.0" y="165" text-anchor="middle" class="stereo">&lt;&lt;Service&gt;&gt;</text>
+<text x="653" y="212" class="member">- fruitRepository: FruitRepository</text>
+<text x="653" y="239" class="member">+ create(Fruit): Fruit</text>
+<text x="653" y="266" class="member">+ findAll(): List&lt;Fruit&gt;</text>
+<text x="653" y="293" class="member">+ findById(Long): Fruit</text>
+<text x="653" y="320" class="member">+ update(Long, Fruit): Fruit</text>
+<text x="653" y="347" class="member">+ delete(Long): void</text>
+<rect x="1195" y="110" width="410" height="250" class="box"/>
+<path d="M1195,182 H1605" stroke="#334155" stroke-width="2"/>
+<text x="1400.0" y="141" text-anchor="middle" class="title">FruitRepository</text>
+<text x="1400.0" y="165" text-anchor="middle" class="stereo">&lt;&lt;Repository / Interface&gt;&gt;</text>
+<text x="1213" y="212" class="member">+ save(Fruit): Fruit</text>
+<text x="1213" y="239" class="member">+ findAll(): List&lt;Fruit&gt;</text>
+<text x="1213" y="266" class="member">+ findById(Long): Optional&lt;Fruit&gt;</text>
+<text x="1213" y="293" class="member">+ delete(Fruit): void</text>
+<rect x="70" y="515" width="340" height="180" class="box"/>
+<path d="M70,587 H410" stroke="#334155" stroke-width="2"/>
+<text x="240.0" y="546" text-anchor="middle" class="title">FruitRequest</text>
+<text x="240.0" y="570" text-anchor="middle" class="stereo">&lt;&lt;DTO / record&gt;&gt;</text>
+<text x="88" y="617" class="member">+ name: String</text>
+<text x="88" y="644" class="member">+ weightInKilos: double</text>
+<rect x="70" y="775" width="360" height="220" class="box"/>
+<path d="M70,847 H430" stroke="#334155" stroke-width="2"/>
+<text x="250.0" y="806" text-anchor="middle" class="title">FruitResponse</text>
+<text x="250.0" y="830" text-anchor="middle" class="stereo">&lt;&lt;DTO / record&gt;&gt;</text>
+<text x="88" y="877" class="member">+ id: Long</text>
+<text x="88" y="904" class="member">+ name: String</text>
+<text x="88" y="931" class="member">+ weightInKilos: double</text>
+<text x="88" y="958" class="member">+ from(Fruit): FruitResponse</text>
+<rect x="1220" y="500" width="380" height="300" class="box"/>
+<path d="M1220,572 H1600" stroke="#334155" stroke-width="2"/>
+<text x="1410.0" y="531" text-anchor="middle" class="title">Fruit</text>
+<text x="1410.0" y="555" text-anchor="middle" class="stereo">&lt;&lt;Entity&gt;&gt;</text>
+<text x="1238" y="602" class="member">- id: Long</text>
+<text x="1238" y="629" class="member">- name: String</text>
+<text x="1238" y="656" class="member">- weightInKilos: double</text>
+<text x="1238" y="683" class="member">+ Fruit()</text>
+<text x="1238" y="710" class="member">+ Fruit(Long, String, double)</text>
+<text x="1238" y="737" class="member">+ getId(): Long</text>
+<text x="1238" y="764" class="member">+ getName(): String</text>
+<text x="1238" y="791" class="member">+ getWeightInKilos(): double</text>
+<rect x="590" y="535" width="430" height="165" class="box"/>
+<path d="M590,607 H1020" stroke="#334155" stroke-width="2"/>
+<text x="805.0" y="566" text-anchor="middle" class="title">FruitNotFoundException</text>
+<text x="805.0" y="590" text-anchor="middle" class="stereo">&lt;&lt;RuntimeException&gt;&gt;</text>
+<text x="608" y="637" class="member">+ FruitNotFoundException(Long)</text>
+<rect x="560" y="790" width="520" height="200" class="box"/>
+<path d="M560,862 H1080" stroke="#334155" stroke-width="2"/>
+<text x="820.0" y="821" text-anchor="middle" class="title">GlobalExceptionHandler</text>
+<text x="820.0" y="845" text-anchor="middle" class="stereo">&lt;&lt;RestControllerAdvice&gt;&gt;</text>
+<text x="578" y="892" class="member">+ handleFruitNotFound(...): ResponseEntity&lt;ApiError&gt;</text>
+<text x="578" y="919" class="member">+ handleValidation(...): ResponseEntity&lt;ApiError&gt;</text>
+<rect x="1210" y="840" width="360" height="150" class="box"/>
+<path d="M1210,912 H1570" stroke="#334155" stroke-width="2"/>
+<text x="1390.0" y="871" text-anchor="middle" class="title">ApiError</text>
+<text x="1390.0" y="895" text-anchor="middle" class="stereo">&lt;&lt;record&gt;&gt;</text>
+<text x="1228" y="942" class="member">+ status: int</text>
+<text x="1228" y="969" class="member">+ error: String</text>
+<text x="1228" y="996" class="member">+ message: String</text>
+</svg>
