@@ -66,10 +66,13 @@ class FruitControllerTest {
     void shouldReturnBadRequestWhenWeightIsNegative() throws Exception {
         mockMvc.perform(post("/fruits").contentType(MediaType.APPLICATION_JSON).content("""
                             {
-                              "name": "Sandia",
-                              "weightInKilos": -4.5
+                              "name": "Manzana",
+                              "weightInKilos": -1.0
                             }
-                            """)).andExpect(status().isBadRequest());
+                            """)).andExpect(status().isBadRequest()).andExpect(jsonPath("$.status")
+                        .value(400)).andExpect(jsonPath("$.error")
+                        .value("Bad Request")).andExpect(jsonPath("$.message")
+                .value("Validation failed"));
     }
 
     @Test
