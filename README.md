@@ -93,7 +93,7 @@ La segunda etapa utiliza únicamente el JRE de Java 21 para ejecutar la aplicaci
 
 Para construir la imagen:
 
-``powershell
+```powershell
 docker build -t fruit-api-h2 .
 ```
 
