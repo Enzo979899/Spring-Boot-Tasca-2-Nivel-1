@@ -54,9 +54,12 @@ class FruitControllerTest {
         mockMvc.perform(post("/fruits").contentType(MediaType.APPLICATION_JSON).content("""
                             {
                               "name": "",
-                              "weightInKilos": 1.2
+                              "weightInKilos": 1.0
                             }
-                            """)).andExpect(status().isBadRequest());
+                            """)).andExpect(status().isBadRequest()).andExpect(jsonPath("$.status")
+                        .value(400)).andExpect(jsonPath("$.error")
+                        .value("Bad Request")).andExpect(jsonPath("$.message")
+                .value("Validation failed"));
     }
 
     @Test
