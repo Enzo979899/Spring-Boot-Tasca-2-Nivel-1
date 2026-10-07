@@ -114,7 +114,7 @@ docker run --rm -p 8080:8080 fruit-api-h2
 ## UML
 ![UML Fruit API H2](docs/Fruit-API-H2-UML.svg)
 
-### Pruebas de funcionamiento
+## Pruebas de funcionamiento
 ```powershell
 PS C:\Windows\system32> Invoke-RestMethod http://localhost:8080/fruits
 PS C:\Windows\system32> Invoke-RestMethod `
