@@ -93,13 +93,13 @@ La segunda etapa utiliza únicamente el JRE de Java 21 para ejecutar la aplicaci
 
 Para construir la imagen:
 
-```bash
+``powershell
 docker build -t fruit-api-h2 .
 ```
 
 Para ejecutar el contenedor:
 
-```bash
+```powershell
 docker run --rm -p 8080:8080 fruit-api-h2
 ```
 
@@ -111,7 +111,7 @@ docker run --rm -p 8080:8080 fruit-api-h2
 - Mediante Docker.
 - Realizando peticiones a la API desde PowerShell.
 
-### UML
+## UML
 ![UML Fruit API H2](docs/Fruit-API-H2-UML.svg)
 
 ### Pruebas de funcionamiento
@@ -152,11 +152,3 @@ PS C:\Windows\system32> Invoke-RestMethod `
 
 PS C:\Windows\system32> Invoke-RestMethod http://localhost:8080/fruits
 ```
-
-### Docker
-
-```powershell
-docker build -t fruit-api-h2 .
-docker run --rm -p 8080:8080 fruit-api-h2
-```
-
